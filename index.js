@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// Defining file path
 const FILE_PATH = path.join(__dirname, 'tasks.json');
 
-// 1. READ FUNCTION: Gets tasks from the JSON file
 function readTasks() {
     if (!fs.existsSync(FILE_PATH)) {
         return [];
@@ -15,12 +13,10 @@ function readTasks() {
     return JSON.parse(fileData);
 }
 
-// 2. SAVE FUNCTION: Saves the tasks array back to the JSON file
 function saveTasks(tasksArray) {
-    // Convert the JavaScript array into nicely formatted text (JSON)
+
     const fileData = JSON.stringify(tasksArray, null, 2);
     
-    // Write that text directly to our tasks.json file
     fs.writeFileSync(FILE_PATH, fileData);
 }
 
@@ -43,40 +39,32 @@ function showMenu() {
     
     rl.question("\nChoose an option (1-5): ", (choice) => {
         if (choice === '1') {
-    // Ask the user what task they want to add
+
     rl.question("\nEnter task description: ", (taskTitle) => {
-        // 1. Read the existing tasks from our file
         const currentTasks = readTasks();
         
-        // 2. Create a new task object
         const newTask = {
             id: currentTasks.length > 0 ? currentTasks[currentTasks.length - 1].id + 1 : 1, // Auto-increment ID
             title: taskTitle,
             completed: false
         };
         
-        // 3. Add the new task to our array
         currentTasks.push(newTask);
         
-        // 4. Save the updated array back to tasks.json
         saveTasks(currentTasks);
         
         console.log(`\nSuccess: Task "${taskTitle}" added with ID: ${newTask.id}!`);
         
-        // Loop back to the main menu
         showMenu();
     });
 } else if (choice === '2') {
-    // 1. Grab the latest list of tasks
     const currentTasks = readTasks();
     
     console.log("\n=== YOUR TASK LIST ===");
     
-    // 2. Check if there's nothing to display
     if (currentTasks.length === 0) {
         console.log("No tasks found. Try adding one first!");
     } else {
-        // 3. Loop through and format each task
         currentTasks.forEach(task => {
             const statusIcon = task.completed ? "[X]" : "[ ]";
             console.log(`${task.id}. ${statusIcon} ${task.title}`);
