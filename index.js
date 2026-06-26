@@ -84,57 +84,47 @@ function showMenu() {
     }
     console.log("=======================");
     
-    // Loop back to the main menu
     showMenu(); 
         } else if (choice === '3') {
-    // 1. Ask the user which task they finished
+
     rl.question("\nEnter the ID of the task to toggle: ", (targetId) => {
         const currentTasks = readTasks();
-        
-        // Convert the input string into a number for matching IDs
+
         const idNumber = parseInt(targetId);
-        
-        // 2. Find the task in our list
+
         const task = currentTasks.find(t => t.id === idNumber);
         
         if (task) {
-            // 3. Flip the status (true becomes false, false becomes true)
             task.completed = !task.completed;
             
-            // 4. Save the updated list back to the file
             saveTasks(currentTasks);
             console.log(`\nSuccess: Task "${task.title}" updated to ${task.completed ? "COMPLETED [X]" : "INCOMPLETE [ ]"}!`);
         } else {
             console.log("\nError: Task ID not found.");
         }
         
-        // Loop back to the main menu
         showMenu();
     });} else if (choice === '4') {
-    // 1. Ask the user which task they want to destroy
+
     rl.question("\nEnter the ID of the task to delete: ", (targetId) => {
         const currentTasks = readTasks();
         const idNumber = parseInt(targetId);
         
-        // 2. Check if the task actually exists before deleting
         const taskExists = currentTasks.some(t => t.id === idNumber);
         
         if (taskExists) {
-            // 3. Filter out the task with the matching ID (creates a new array without it)
             const updatedTasks = currentTasks.filter(t => t.id !== idNumber);
             
-            // 4. Save the updated list back to the file
             saveTasks(updatedTasks);
             console.log(`\nSuccess: Task with ID ${idNumber} has been permanently deleted.`);
         } else {
             console.log("\nError: Task ID not found.");
         }
         
-        // Loop back to the main menu
         showMenu();
     });} else if (choice === '5') {
             console.log("\nGoodbye!");
-            rl.close(); // Closes the terminal connection, ending the script
+            rl.close(); 
         } else {
             console.log("\nInvalid choice! Please pick a number from 1 to 5.");
             showMenu(); 
