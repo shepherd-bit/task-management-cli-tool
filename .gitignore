@@ -1,0 +1,9 @@
+# Ignore our local "database" file so personal tasks aren't tracked
+tasks.json
+
+# Ignore node_modules directory (even though we didn't install external npm packages yet, it's a best practice)
+node_modules/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
