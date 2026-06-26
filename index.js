@@ -1,20 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
-// Define the file path where our tasks will be saved
+// Defining file path
 const FILE_PATH = path.join(__dirname, 'tasks.json');
 
 // 1. READ FUNCTION: Gets tasks from the JSON file
 function readTasks() {
-    // If the file doesn't exist yet, return an empty list
     if (!fs.existsSync(FILE_PATH)) {
         return [];
     }
     
-    // Read the file content as plain text
     const fileData = fs.readFileSync(FILE_PATH, 'utf-8');
     
-    // Turn the plain text back into a JavaScript array
     return JSON.parse(fileData);
 }
 
@@ -27,17 +24,8 @@ function saveTasks(tasksArray) {
     fs.writeFileSync(FILE_PATH, fileData);
 }
 
-// --- QUICK TEST ---
-// Let's test it out to make sure it works!
-// console.log("Initial tasks in file:", readTasks());
-
-// const testTasks = [{ id: 1, title: "Learn Step 1 of Node", completed: false }];
-// saveTasks(testTasks);
-// console.log("Tasks after saving test data:", readTasks());
-
 const readline = require('readline');
 
-// Set up the terminal interface to read input and write output
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -52,7 +40,7 @@ function showMenu() {
     console.log("4. Delete Task");
     console.log("5. Exit");
     
-    // Ask the user for their choice
+    
     rl.question("\nChoose an option (1-5): ", (choice) => {
         if (choice === '1') {
     // Ask the user what task they want to add
